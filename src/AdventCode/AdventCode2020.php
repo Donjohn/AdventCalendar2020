@@ -25,7 +25,7 @@ class AdventCode2020
         $this->projectDir = $projectDir;
     }
 
-    private function getInputs(string $path): array
+    private function getInputs(string $path, bool $toInt = false): array
     {
         $inputs=[];
 
@@ -33,7 +33,7 @@ class AdventCode2020
         while(! feof($fn))  {
             $number=fgets($fn);
             if ($number) {
-                $inputs[] = (int)$number;
+                $inputs[] = $toInt ? (int)$number : $number;
             }
         }
         fclose($fn);
@@ -49,7 +49,7 @@ class AdventCode2020
      */
     public function day1part1(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part1.txt');
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part1.txt', true);
         sort($inputs);
         $nbInputs = count($inputs);
         $j=1;
@@ -75,7 +75,7 @@ class AdventCode2020
      */
     public function day1part2(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part2.txt');
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part2.txt', true);
         sort($inputs);
         $nbInputs = count($inputs);
         $j=1;
