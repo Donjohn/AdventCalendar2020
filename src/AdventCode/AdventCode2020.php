@@ -49,7 +49,7 @@ class AdventCode2020
      */
     public function day1part1(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part1.txt', true);
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt', true);
         sort($inputs);
         $nbInputs = count($inputs);
         $j=1;
@@ -75,7 +75,7 @@ class AdventCode2020
      */
     public function day1part2(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part2.txt', true);
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt', true);
         sort($inputs);
         $nbInputs = count($inputs);
         $j=1;
@@ -99,6 +99,68 @@ class AdventCode2020
 
 
         return Command::FAILURE;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day2part1(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+        $valide=0;
+
+        foreach ($inputs as $line)
+        {
+            if (preg_match_all('/(?P<min>\d+)-(?P<max>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
+            {
+                $nbfound = preg_match_all('/'.$matches['letter'][0].'/', $matches['password'][0]);
+                if ($nbfound >= (int) $matches['min'][0] && $nbfound <= (int) $matches['max'][0])
+                {
+                    $valide++;
+                }
+            }
+
+        }
+
+        $output->writeln($valide);
+        return $valide> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day2part2(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+        $valide=0;
+
+        foreach ($inputs as $line)
+        {
+            if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
+            {
+                $firstPos = (int)$matches['firstPos'][0]-1;
+                $secondPost = (int)$matches['secondPos'][0]-1;
+                $letter =  $matches['letter'][0];
+                if (
+                    isset($matches['password'][0][$firstPos], $matches['password'][0][$secondPost]) &&
+                    (
+                        ($matches['password'][0][$firstPos] === $letter && $matches['password'][0][$secondPost] !== $letter) ||
+                        ($matches['password'][0][$firstPos] !== $letter && $matches['password'][0][$secondPost] === $letter)
+                    )
+                )
+                {
+                    $valide++;
+                }
+            }
+
+        }
+
+        $output->writeln($valide);
+        return $valide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
 }

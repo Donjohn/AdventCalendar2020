@@ -24,11 +24,33 @@ class AdventCode2020Test extends KernelTestCase
             [
                 [
                     1,1
+                ],
+                [
+                    '365619'
                 ]
             ],
             [
                 [
                     1,2
+                ],
+                [
+                    '236873508'
+                ]
+            ],
+            [
+                [
+                    2,1
+                ],
+                [
+                    '536'
+                ]
+            ],
+            [
+                [
+                    2,2
+                ],
+                [
+                    '558'
                 ]
             ]
         ];
@@ -38,8 +60,9 @@ class AdventCode2020Test extends KernelTestCase
      * @dataProvider provideDayAndPart
      *
      * @param array $dayAndPart
+     * @param array $result
      */
-    public function testExecute(array $dayAndPart){
+    public function testExecute(array $dayAndPart, array $result){
 
         $kernel = static::createKernel();
         $kernel->boot();
@@ -48,11 +71,12 @@ class AdventCode2020Test extends KernelTestCase
         $application->add(new AdventCodeCommand($kernel->getContainer()->get(AdventCode2020::class)));
 
 
-        $command = $application->find('advent-code:2020');
+        $command = $application->get('advent-code:2020');
         $commandTester = new CommandTester($command);
         [$day, $part] = $dayAndPart;
         $commandTester->execute(['day' => $day, 'part' => $part]);
 
         self::assertStringContainsString(0,$commandTester->getStatusCode());
+        self::assertStringContainsString($result[0],$commandTester->getDisplay());
     }
 }
