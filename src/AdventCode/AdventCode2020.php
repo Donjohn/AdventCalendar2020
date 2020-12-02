@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Command;
+
+namespace App\AdventCode;
+
 
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class Day1Part2Command extends Command
+class AdventCode2020
 {
-    protected static $defaultName = 'Day1Part2';
+
     /**
      * @var string
      */
@@ -16,16 +17,11 @@ class Day1Part2Command extends Command
 
     public function __construct(string $projectDir)
     {
-
         $this->projectDir = $projectDir;
-        parent::__construct();
     }
 
-
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    private function getInputs(string $path): array
     {
-        $path = $this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'Day1'.DIRECTORY_SEPARATOR.'Part2'.DIRECTORY_SEPARATOR.'input.txt';
-
         $inputs=[];
 
         $fn = fopen($path, 'rb');
@@ -37,6 +33,34 @@ class Day1Part2Command extends Command
         }
         fclose($fn);
 
+        return $inputs;
+    }
+
+
+    public function day1part1(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part1.txt');
+        sort($inputs);
+        $nbInputs = count($inputs);
+        $j=1;
+        for($i=0; $inputs[$i]+$inputs[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $i++)
+        {
+            for($j=$i+1; $inputs[$i]+$inputs[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $j++)
+            {
+                if ($inputs[$i]+$inputs[$j]===2020) {
+                    $output->writeln($inputs[$i]*$inputs[$j]);
+                    return Command::SUCCESS;
+                }
+            }
+            $j=$i;
+        }
+
+        return Command::FAILURE;
+    }
+
+    public function day1part2(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part2.txt');
         sort($inputs);
         $nbInputs = count($inputs);
         $j=1;
@@ -61,4 +85,5 @@ class Day1Part2Command extends Command
 
         return Command::FAILURE;
     }
+
 }
