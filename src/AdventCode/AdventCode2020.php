@@ -7,13 +7,18 @@ namespace App\AdventCode;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class AdventCode2020
+ *
+ * @package App\AdventCode
+ */
 class AdventCode2020
 {
 
     /**
      * @var string
      */
-    private $projectDir;
+    private string $projectDir;
 
     public function __construct(string $projectDir)
     {
@@ -37,6 +42,11 @@ class AdventCode2020
     }
 
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
     public function day1part1(OutputInterface $output)
     {
         $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part1.txt');
@@ -58,6 +68,11 @@ class AdventCode2020
         return Command::FAILURE;
     }
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
     public function day1part2(OutputInterface $output)
     {
         $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day1part2.txt');
