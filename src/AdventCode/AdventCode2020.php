@@ -163,4 +163,31 @@ class AdventCode2020
         return $valide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day3part1(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+
+        $nbTrees = 0;
+        $nbLines = count($inputs)-1;
+        $lineLenght = strlen($inputs[0])-2; //il me compte le \n donc -2
+        $lineCursor=0;
+        $columnCursor=0;
+        while ($lineCursor !== $nbLines)
+        {
+            $columnCursor = ($columnCursor+3) > $lineLenght ? (($columnCursor+3) % $lineLenght)-1 : ($columnCursor+3);
+            if ($inputs[++$lineCursor][$columnCursor] === '#')
+            {
+                $nbTrees++;
+            }
+        }
+        $output->writeln($nbTrees);
+        return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
 }
+
