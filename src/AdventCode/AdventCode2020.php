@@ -143,13 +143,13 @@ class AdventCode2020
             if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
             {
                 $firstPos = (int)$matches['firstPos'][0]-1;
-                $secondPost = (int)$matches['secondPos'][0]-1;
+                $secondPos = (int)$matches['secondPos'][0]-1;
                 $letter =  $matches['letter'][0];
                 if (
-                    isset($matches['password'][0][$firstPos], $matches['password'][0][$secondPost]) &&
+                    isset($matches['password'][0][$firstPos], $matches['password'][0][$secondPos]) &&
                     (
-                        ($matches['password'][0][$firstPos] === $letter && $matches['password'][0][$secondPost] !== $letter) ||
-                        ($matches['password'][0][$firstPos] !== $letter && $matches['password'][0][$secondPost] === $letter)
+                        ($matches['password'][0][$firstPos] === $letter && $matches['password'][0][$secondPos] !== $letter) ||
+                        ($matches['password'][0][$firstPos] !== $letter && $matches['password'][0][$secondPos] === $letter)
                     )
                 )
                 {
