@@ -179,7 +179,7 @@ class AdventCode2020
         $columnCursor=0;
         while ($lineCursor < $nbLines)
         {
-            $columnCursor = ($columnCursor+$right) > $lineLenght ? (($columnCursor+$right) % $lineLenght)-1 : ($columnCursor+$right);
+            $columnCursor = ($columnCursor+$right) > $lineLenght ? (($columnCursor+$right) - $lineLenght - 1) : ($columnCursor+$right);
             $lineCursor = $down + $lineCursor;
             if ($inputs[$lineCursor][$columnCursor] === '#')
             {
