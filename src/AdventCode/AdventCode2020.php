@@ -164,6 +164,33 @@ class AdventCode2020
     }
 
     /**
+     * @param array $inputs
+     * @param int   $right
+     * @param int   $down
+     *
+     * @return int
+     */
+    private function factorDay3(array $inputs, int $right, int $down)
+    {
+        $nbTrees = 0;
+        $nbLines = count($inputs)-1;
+        $lineLenght = strlen($inputs[0])-2; //il me compte le \n donc -2
+        $lineCursor=0;
+        $columnCursor=0;
+        while ($lineCursor < $nbLines)
+        {
+            $columnCursor = ($columnCursor+$right) > $lineLenght ? (($columnCursor+$right) % $lineLenght)-1 : ($columnCursor+$right);
+            $lineCursor = $down + $lineCursor;
+            if ($inputs[$lineCursor][$columnCursor] === '#')
+            {
+                $nbTrees++;
+            }
+        }
+
+        return $nbTrees;
+    }
+
+    /**
      * @param OutputInterface $output
      *
      * @return int
@@ -172,19 +199,21 @@ class AdventCode2020
     {
         $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
 
-        $nbTrees = 0;
-        $nbLines = count($inputs)-1;
-        $lineLenght = strlen($inputs[0])-2; //il me compte le \n donc -2
-        $lineCursor=0;
-        $columnCursor=0;
-        while ($lineCursor !== $nbLines)
-        {
-            $columnCursor = ($columnCursor+3) > $lineLenght ? (($columnCursor+3) % $lineLenght)-1 : ($columnCursor+3);
-            if ($inputs[++$lineCursor][$columnCursor] === '#')
-            {
-                $nbTrees++;
-            }
-        }
+        $nbTrees = $this->factorDay3($inputs, 3, 1);
+        $output->writeln($nbTrees);
+        return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day3part2(OutputInterface $output)
+    {
+        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day3part1.txt');
+
+        $nbTrees = $this->factorDay3($inputs, 1, 1) * $this->factorDay3($inputs, 3, 1) * $this->factorDay3($inputs, 5, 1) * $this->factorDay3($inputs, 7, 1) * $this->factorDay3($inputs, 1, 2);
         $output->writeln($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }
