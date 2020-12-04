@@ -40,7 +40,7 @@ trait Day4
                 }
                 $documentKey = [];
             } else {
-                preg_match_all('/((?P<key>\w+):(?P<value>[\w\s#]\s?))/', $line, $match);
+                preg_match_all('/((?P<key>\w+):(?P<value>[#\w0-9]+))+/', $line, $match);
                 foreach ($match['key'] as $key)
                 {
                     $documentKey[] = $key;
@@ -50,6 +50,102 @@ trait Day4
         }
 
         if ($isValide($documentKey)) {
+            $nbValide++;
+        }
+
+        $output->writeln($nbValide);
+        return $nbValide> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day4part2(OutputInterface $output)
+    {
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day4part1.txt',FILE_IGNORE_NEW_LINES);
+        $nbValide = 0;
+        $pattern = [
+            'byr' => static function ($value) {
+                //four digits; at least 1920 and at most 2002.
+                return (int) $value >= 1920 && (int) $value <= 2002;
+            },
+            'iyr' => static function($value) {
+                //four digits; at least 2010 and at most 2020
+                return (int) $value >= 2010 && (int) $value <= 2020;
+            },
+            'eyr' =>  static function($value) {
+                //four digits; at least 2020 and at most 2030
+                return (int) $value >= 2020 && (int) $value <= 2030;
+            },
+            'hgt' => static function($value) {
+                //a number followed by either cm or in:
+                //
+                //    If cm, the number must be at least 150 and at most 193.
+                //    If in, the number must be at least 59 and at most 76.
+                return preg_match_all('/^(\d{2,3})(cm|in)$/', $value, $matches ) &&
+                    (
+                        ($matches[2][0]==='cm' && $matches[1][0]>=150 && $matches[1][0]<=193) ||
+                        ($matches[2][0]==='in' && $matches[1][0]>=59 && $matches[1][0]<=76)
+                    );
+            },
+            'hcl' => static function($value) {
+                //a # followed by exactly six characters 0-9 or a-f
+                return preg_match('/^#[0-9a-f]{6}$/i', $value);
+            },
+            'ecl' => static function($value) {
+                //exactly one of: amb blu brn gry grn hzl oth
+                return preg_match('/^(amb|blu|brn|gry|grn|hzl|oth)$/i', $value);
+            },
+            'pid' => static function($value) {
+                //a nine-digit number, including leading zeroes
+                return strlen($value) === 9;
+            }
+        ];
+        $document = [];
+
+
+        $isValide = static function($document) use ($pattern, $output)
+        {
+            if (count(array_diff_key($pattern, $document)) !== 0)
+            {
+                return false;
+            }
+
+            foreach ($document as $key => $value)
+            {
+                if ($key !== 'cid' && !$pattern[$key]($value)) {
+                    if ($key==='pid') {
+                        $output->writeln($key.' '.$value.' incorrect');
+                    }
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        foreach ($lines as $line)
+        {
+            if ($line === '')
+            {
+                if ($isValide($document)) {
+                    $nbValide++;
+                }
+                $document = [];
+            } else {
+                preg_match_all('/((?P<key>\w+):(?P<value>[#\w0-9]+))+/', $line, $match);
+                foreach ($match['key'] as $index => $key)
+                {
+                    $document[$key] = $match['value'][$index];
+                }
+            }
+
+        }
+
+        if ($isValide($document)) {
             $nbValide++;
         }
 
