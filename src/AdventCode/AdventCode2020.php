@@ -25,22 +25,6 @@ class AdventCode2020
         $this->projectDir = $projectDir;
     }
 
-    private function getInputs(string $path, bool $toInt = false): array
-    {
-        $inputs=[];
-
-        $fn = fopen($path, 'rb');
-        while(! feof($fn))  {
-            $number=fgets($fn);
-            if ($number) {
-                $inputs[] = $toInt ? (int)$number : $number;
-            }
-        }
-        fclose($fn);
-
-        return $inputs;
-    }
-
 
     /**
      * @param OutputInterface $output
@@ -49,16 +33,16 @@ class AdventCode2020
      */
     public function day1part1(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt', true);
-        sort($inputs);
-        $nbInputs = count($inputs);
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        sort($lines);
+        $nbInputs = count($lines);
         $j=1;
-        for($i=0; $inputs[$i]+$inputs[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $i++)
+        for($i=0; $lines[$i]+$lines[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $i++)
         {
-            for($j=$i+1; $inputs[$i]+$inputs[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $j++)
+            for($j=$i+1; $lines[$i]+$lines[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $j++)
             {
-                if ($inputs[$i]+$inputs[$j]===2020) {
-                    $output->writeln($inputs[$i]*$inputs[$j]);
+                if ($lines[$i]+$lines[$j]===2020) {
+                    $output->writeln($lines[$i]*$lines[$j]);
                     return Command::SUCCESS;
                 }
             }
@@ -75,19 +59,19 @@ class AdventCode2020
      */
     public function day1part2(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt', true);
-        sort($inputs);
-        $nbInputs = count($inputs);
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        sort($lines);
+        $nbInputs = count($lines);
         $j=1;
         $k=2;
-        for($i=0; $inputs[$i]+$inputs[$j]+$inputs[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $i++)
+        for($i=0; $lines[$i]+$lines[$j]+$lines[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $i++)
         {
-            for($j=$i+1; $inputs[$i]+$inputs[$j]+$inputs[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $j++)
+            for($j=$i+1; $lines[$i]+$lines[$j]+$lines[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $j++)
             {
-                for($k=$j+1; $inputs[$i]+$inputs[$j]+$inputs[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $k++)
+                for($k=$j+1; $lines[$i]+$lines[$j]+$lines[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $k++)
                 {
-                    if ($inputs[$i]+$inputs[$j]+$inputs[$k]===2020) {
-                        $output->writeln($inputs[$i]*$inputs[$j]*$inputs[$k]);
+                    if ($lines[$i]+$lines[$j]+$lines[$k]===2020) {
+                        $output->writeln($lines[$i]*$lines[$j]*$lines[$k]);
                         return Command::SUCCESS;
                     }
                 }
@@ -108,10 +92,10 @@ class AdventCode2020
      */
     public function day2part1(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
         $valide=0;
 
-        foreach ($inputs as $line)
+        foreach ($lines as $line)
         {
             if (preg_match_all('/(?P<min>\d+)-(?P<max>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
             {
@@ -135,10 +119,10 @@ class AdventCode2020
      */
     public function day2part2(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
         $valide=0;
 
-        foreach ($inputs as $line)
+        foreach ($lines as $line)
         {
             if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
             {
@@ -164,24 +148,24 @@ class AdventCode2020
     }
 
     /**
-     * @param array $inputs
+     * @param array $lines
      * @param int   $right
      * @param int   $down
      *
      * @return int
      */
-    private function factorDay3(array $inputs, int $right, int $down)
+    private function factorDay3(array $lines, int $right, int $down)
     {
         $nbTrees = 0;
-        $nbLines = count($inputs)-1;
-        $lineLenght = strlen($inputs[0])-2; //il me compte le \n donc -2
+        $nbLines = count($lines)-1;
+        $lineLenght = strlen($lines[0])-1;
         $lineCursor=0;
         $columnCursor=0;
         while ($lineCursor < $nbLines)
         {
             $columnCursor = ($columnCursor+$right) > $lineLenght ? (($columnCursor+$right) % $lineLenght)-1 : ($columnCursor+$right);
             $lineCursor = $down + $lineCursor;
-            if ($inputs[$lineCursor][$columnCursor] === '#')
+            if ($lines[$lineCursor][$columnCursor] === '#')
             {
                 $nbTrees++;
             }
@@ -197,9 +181,9 @@ class AdventCode2020
      */
     public function day3part1(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt');
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
 
-        $nbTrees = $this->factorDay3($inputs, 3, 1);
+        $nbTrees = $this->factorDay3($lines, 3, 1);
         $output->writeln($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }
@@ -211,11 +195,59 @@ class AdventCode2020
      */
     public function day3part2(OutputInterface $output)
     {
-        $inputs = $this->getInputs($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day3part1.txt');
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day3part1.txt',FILE_IGNORE_NEW_LINES);
 
-        $nbTrees = $this->factorDay3($inputs, 1, 1) * $this->factorDay3($inputs, 3, 1) * $this->factorDay3($inputs, 5, 1) * $this->factorDay3($inputs, 7, 1) * $this->factorDay3($inputs, 1, 2);
+        $nbTrees = $this->factorDay3($lines, 1, 1) * $this->factorDay3($lines, 3, 1) * $this->factorDay3($lines, 5, 1) * $this->factorDay3($lines, 7, 1) * $this->factorDay3($lines, 1, 2);
         $output->writeln($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day4part1(OutputInterface $output)
+    {
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $nbValide = 0;
+        $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', 'cid'];
+        $documentKey = [];
+
+        $isValide = static function($documentKey) use ($pattern, $output)
+        {
+            $missing = array_diff($pattern, $documentKey);
+            if (($indexCid = array_search('cid', $missing)) !== false){
+                unset($missing[$indexCid]);
+            }
+
+            return count($missing) === 0;
+        };
+
+        foreach ($lines as $nb => $line)
+        {
+            if ($line === '')
+            {
+                if ($isValide($documentKey)) {
+                    $nbValide++;
+                }
+                $documentKey = [];
+            } else {
+                preg_match_all('/((?P<key>\w+):(?P<value>[\w\s#]\s?))/', $line, $match);
+                foreach ($match['key'] as $key)
+                {
+                    $documentKey[] = $key;
+                }
+            }
+
+        }
+
+        if ($isValide($documentKey)) {
+            $nbValide++;
+        }
+
+        $output->writeln($nbValide);
+        return $nbValide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
 }
