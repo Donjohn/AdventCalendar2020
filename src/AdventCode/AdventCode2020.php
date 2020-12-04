@@ -211,17 +211,12 @@ class AdventCode2020
     {
         $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
         $nbValide = 0;
-        $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid', 'cid'];
+        $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
         $documentKey = [];
 
-        $isValide = static function($documentKey) use ($pattern, $output)
+        $isValide = static function($documentKey) use ($pattern)
         {
-            $missing = array_diff($pattern, $documentKey);
-            if (($indexCid = array_search('cid', $missing)) !== false){
-                unset($missing[$indexCid]);
-            }
-
-            return count($missing) === 0;
+            return count(array_diff($pattern, $documentKey))=== 0;
         };
 
         foreach ($lines as $nb => $line)
