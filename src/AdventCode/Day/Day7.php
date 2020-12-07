@@ -39,7 +39,7 @@ trait Day7
 
         foreach ($cargo as $bag => $bags)
         {
-            $value = $this->validBag($bag, $cargo, $goodBags) ? $value+1 : $value;
+            $value += $this->validBag($bag, $cargo, $goodBags);
         }
 
         $output->write($value);
@@ -51,24 +51,24 @@ trait Day7
      * @param array  $cargo
      * @param array  $goodBags
      *
-     * @return bool
+     * @return int
      */
     private function validBag(string $bag, array $cargo, array $goodBags)
     {
         if (in_array($bag, $goodBags, true)) {
-            return true;
+            return 1;
         }
 
         if (isset($cargo[$bag])) {
             foreach($cargo[$bag] as $newBag) {
                 if($this->validBag($newBag, $cargo, $goodBags))
                 {
-                    return true;
+                    return 1;
                 }
             }
         }
 
-        return false;
+        return 0;
     }
 
     /**
