@@ -27,40 +27,8 @@ trait Day5
         $value = 0;
         foreach ($lines as $line) {
 
-            $startingRow = 0;
-            $endingRow = 127;
-            $nbRow = 128;
-            $startingColumn = 0;
-            $endingColumn = 7;
-            $nbColumn = 8;
+            $calc = $this->getIdSeat($line);
 
-            $i = 0;
-            while ($i < 7) {
-                $nbRow /= 2;
-                if ($line[$i] === 'B')
-                {
-                    $startingRow += $nbRow;
-                } elseif ($line[$i] === 'F'){
-                    $endingRow -= $nbRow;
-                }
-                $i++;
-            }
-            $row = $startingRow < $endingRow ? $startingRow : $endingRow;
-
-            while ($i < 10) {
-                $nbColumn /= 2;
-                if ($line[$i] === 'R')
-                {
-                    $startingColumn += $nbColumn;
-                } elseif ($line[$i] === 'L'){
-                    $endingColumn *= $nbColumn;
-                }
-                $i++;
-            }
-
-            $column = $startingColumn < $endingColumn ? $startingColumn : $endingColumn;
-
-            $calc = $row*8 + $column;
             $value = $calc > $value ? $calc : $value;
         }
 
@@ -68,6 +36,64 @@ trait Day5
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day5part2(OutputInterface $output)
+    {
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day5part1.txt',FILE_IGNORE_NEW_LINES);
+
+
+        $seats = [];
+        foreach ($lines as $line) {
+            $seats[] = $this->getIdSeat($line);
+        }
+        sort($seats);
+
+        $allSeats = array_fill($seats[0], count($seats), '');
+
+        $value = current(array_diff(array_keys($allSeats), $seats));
+
+        $output->writeln($value);
+        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+    /**
+     * @param $line
+     *
+     * @return int
+     */
+    public function getIdSeat(string $line): int
+    {
+        $startingRow = 0;
+        $endingRow = 127;
+        $nbRow = 128;
+        $startingColumn = 0;
+        $endingColumn = 7;
+        $nbColumn = 8;
+
+        $i = 0;
+        while ($i < 7) {
+            $nbRow /= 2;
+            $startingRow = $line[$i] === 'B' ? $startingRow + $nbRow : $startingRow;
+            $endingRow = $line[$i] === 'F' ? $endingRow - $nbRow : $endingRow;
+            $i++;
+        }
+        $row = $startingRow < $endingRow ? $startingRow : $endingRow;
+
+        while ($i < 10) {
+            $nbColumn /= 2;
+            $startingColumn = $line[$i] === 'R' ? $startingColumn + $nbColumn : $startingColumn;
+            $endingColumn = $line[$i] === 'L' ? $endingColumn - $nbColumn : $endingColumn;
+            $i++;
+        }
+
+        $column = $startingColumn < $endingColumn ? $startingColumn : $endingColumn;
+
+        return $row * 8 + $column;
+    }
 
 
 }
