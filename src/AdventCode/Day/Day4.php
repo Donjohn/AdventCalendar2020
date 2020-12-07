@@ -21,7 +21,7 @@ trait Day4
      */
     public function day4part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
         $nbValide = 0;
         $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
         $documentKey = [];
@@ -65,7 +65,7 @@ trait Day4
      */
     public function day4part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day4part1.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile('day4part1.txt');
         $nbValide = 0;
         $pattern = [
             'byr' => static function ($value) {

@@ -24,7 +24,7 @@ trait Day3
      *
      * @return int
      */
-    private function factorDay3(array $lines, int $right, int $down)
+    private function getSmashedTrees(array $lines, int $right, int $down)
     {
         $nbTrees = 0;
         $nbLines = count($lines)-1;
@@ -51,9 +51,9 @@ trait Day3
      */
     public function day3part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
 
-        $nbTrees = $this->factorDay3($lines, 3, 1);
+        $nbTrees = $this->getSmashedTrees($lines, 3, 1);
         $output->write($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }
@@ -65,9 +65,9 @@ trait Day3
      */
     public function day3part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day3part1.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile('day3part1.txt');
 
-        $nbTrees = $this->factorDay3($lines, 1, 1) * $this->factorDay3($lines, 3, 1) * $this->factorDay3($lines, 5, 1) * $this->factorDay3($lines, 7, 1) * $this->factorDay3($lines, 1, 2);
+        $nbTrees = $this->getSmashedTrees($lines, 1, 1) * $this->getSmashedTrees($lines, 3, 1) * $this->getSmashedTrees($lines, 5, 1) * $this->getSmashedTrees($lines, 7, 1) * $this->getSmashedTrees($lines, 1, 2);
         $output->write($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }

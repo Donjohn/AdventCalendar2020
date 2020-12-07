@@ -21,12 +21,12 @@ trait Day2
      */
     public function day2part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
         $valide=0;
 
         foreach ($lines as $line)
         {
-            if (preg_match_all('/(?P<min>\d+)-(?P<max>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
+            if (preg_match_all('/(?P<min>\d+)-(?P<max>\d+)\s(?P<letter>\w):\s(?P<password>\w+)/', $line, $matches))
             {
                 $nbfound = preg_match_all('/'.$matches['letter'][0].'/', $matches['password'][0]);
                 if ($nbfound >= (int) $matches['min'][0] && $nbfound <= (int) $matches['max'][0])
@@ -48,12 +48,12 @@ trait Day2
      */
     public function day2part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
         $valide=0;
 
         foreach ($lines as $line)
         {
-            if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+) (?P<letter>\w): (?P<password>\w+)/', $line, $matches))
+            if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+)\s(?P<letter>\w):\s(?P<password>\w+)/', $line, $matches))
             {
                 $firstPos = (int)$matches['firstPos'][0]-1;
                 $secondPos = (int)$matches['secondPos'][0]-1;

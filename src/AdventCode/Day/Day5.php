@@ -21,7 +21,7 @@ trait Day5
      */
     public function day5part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
 
 
         $value = 0;
@@ -43,7 +43,7 @@ trait Day5
      */
     public function day5part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day5part1.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile('day5part1.txt');
 
 
         $seats = [];

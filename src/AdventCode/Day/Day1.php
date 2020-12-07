@@ -21,7 +21,7 @@ trait Day1
      */
     public function day1part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
         sort($lines);
         $nbInputs = count($lines);
         $j=1;
@@ -49,7 +49,7 @@ trait Day1
      */
     public function day1part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
         sort($lines);
         $nbInputs = count($lines);
         $j=1;

@@ -21,7 +21,7 @@ trait Day7
      */
     public function day7part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
 
 
         preg_match_all('/(\w+\s\w+)\sbags\scontain\s.+(shiny\sgold+)\sbags/m', implode("\n", $lines), $matches);
@@ -78,7 +78,7 @@ trait Day7
      */
     public function day7part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day7part1.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile('day7part1.txt');
 
 
         $value = 0;

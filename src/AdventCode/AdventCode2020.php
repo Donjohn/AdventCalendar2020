@@ -38,5 +38,15 @@ class AdventCode2020
         $this->projectDir = $projectDir;
     }
 
+    /**
+     * @param string $file
+     *
+     * @return array|false
+     */
+    private function getFile(string $file)
+    {
+        return file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.$file, FILE_IGNORE_NEW_LINES);
+    }
+
 }
 

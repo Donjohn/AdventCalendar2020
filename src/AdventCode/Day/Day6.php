@@ -21,7 +21,7 @@ trait Day6
      */
     public function day6part1(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile(__FUNCTION__.'.txt');
 
 
         $answers = [];
@@ -53,11 +53,12 @@ trait Day6
      */
     public function day6part2(OutputInterface $output)
     {
-        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day6part1.txt',FILE_IGNORE_NEW_LINES);
+        $lines = $this->getFile('day6part1.txt');
 
 
         $newGroup = true;
         $value = 0;
+        $answers=[];
         foreach ($lines as $line) {
 
             if ($line === '')
