@@ -53,7 +53,7 @@ trait Day4
             $nbValide++;
         }
 
-        $output->writeln($nbValide);
+        $output->write($nbValide);
         return $nbValide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -136,7 +136,7 @@ trait Day4
             $nbValide++;
         }
 
-        $output->writeln($nbValide);
+        $output->write($nbValide);
         return $nbValide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 }

@@ -24,7 +24,7 @@ trait Day7
         $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
 
 
-        preg_match_all('/([a-z]+\s[a-z]+)\sbags\scontain\s.+(shiny\sgold+)\sbags/m', implode("\n", $lines), $matches);
+        preg_match_all('/(\w+\s\w+)\sbags\scontain\s.+(shiny\sgold+)\sbags/m', implode("\n", $lines), $matches);
 
         $goodBags = $matches[1];
         $value = 0;
@@ -32,8 +32,8 @@ trait Day7
 
         foreach($lines as $line)
         {
-            preg_match('/([a-z]+\s[a-z]+)\sbags\scontain\s(.*)/', $line, $bag);
-            preg_match_all('/([a-z]+\s[a-z]+)\sbag/', $bag[2], $bags);
+            preg_match('/(\w+\s\w+)\sbags\scontain\s(.*)/', $line, $bag);
+            preg_match_all('/(\w+\s\w+)\sbag/', $bag[2], $bags);
             $cargo[$bag[1]] = $bags[1];
         }
 
@@ -42,7 +42,7 @@ trait Day7
             $value = $this->validBag($bag, $cargo, $goodBags) ? $value+1 : $value;
         }
 
-        $output->writeln($value);
+        $output->write($value);
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -69,6 +69,56 @@ trait Day7
         }
 
         return false;
+    }
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day7part2(OutputInterface $output)
+    {
+        $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day7part1.txt',FILE_IGNORE_NEW_LINES);
+
+
+        $value = 0;
+        $cargo = [];
+
+        foreach($lines as $line)
+        {
+            preg_match('/(\w+\s\w+)\sbags\scontain\s(.*)/', $line, $bag);
+            preg_match_all('/((?P<number>\d+)\s(?P<bag>\w+\s\w+))\sbag/', $bag[2], $bags);
+            $cargo[$bag[1]] = array_combine($bags['bag'], $bags['number']);
+        }
+
+        foreach ($cargo['shiny gold'] as $bag => $number)
+        {
+            $value+= $number + ($number*($this->countBag($bag, $cargo)));
+        }
+
+        $output->write($value);
+        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+    }
+
+    /**
+     * @param string $bag
+     * @param array  $cargo
+     *
+     * @return int
+     */
+    private function countBag(string $bag, array $cargo)
+    {
+        if (count($cargo[$bag])===0)
+        {
+            return 0;
+        }
+
+        $value = 0;
+        foreach($cargo[$bag] as $newBag => $number) {
+            $value+= $number + ($number*($this->countBag($newBag, $cargo)));
+        }
+        return $value;
+
     }
 
 

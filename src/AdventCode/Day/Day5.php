@@ -32,7 +32,7 @@ trait Day5
             $value = $calc > $value ? $calc : $value;
         }
 
-        $output->writeln($value);
+        $output->write($value);
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -56,7 +56,7 @@ trait Day5
 
         $value = current(array_diff(array_keys($allSeats), $seats));
 
-        $output->writeln($value);
+        $output->write($value);
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 

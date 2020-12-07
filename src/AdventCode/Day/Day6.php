@@ -42,7 +42,7 @@ trait Day6
 
         $value+=count($answers);
 
-        $output->writeln($value);
+        $output->write($value);
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -75,7 +75,7 @@ trait Day6
 
         $value+=count($answers);
 
-        $output->writeln($value);
+        $output->write($value);
         return $value> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 

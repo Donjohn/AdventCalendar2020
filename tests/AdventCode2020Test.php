@@ -60,6 +60,9 @@ class AdventCode2020Test extends KernelTestCase
             ],
             [
                 [7,1],['326']
+            ],
+            [
+                [7,2],['5635']
             ]
         ];
     }
@@ -84,7 +87,6 @@ class AdventCode2020Test extends KernelTestCase
         [$day, $part] = $dayAndPart;
         $commandTester->execute(['day' => $day, 'part' => $part]);
 
-        self::assertStringContainsString(0,$commandTester->getStatusCode());
-        self::assertStringContainsString($result[0],$commandTester->getDisplay());
+        self::assertEquals($result[0],$commandTester->getDisplay());
     }
 }

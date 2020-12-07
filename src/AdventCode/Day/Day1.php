@@ -30,7 +30,7 @@ trait Day1
             for($j=$i+1; $lines[$i]+$lines[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $j++)
             {
                 if ($lines[$i]+$lines[$j]===2020) {
-                    $output->writeln($lines[$i]*$lines[$j]);
+                    $output->write($lines[$i]*$lines[$j]);
                     return Command::SUCCESS;
                 }
             }
@@ -61,7 +61,7 @@ trait Day1
                 for($k=$j+1; $lines[$i]+$lines[$j]+$lines[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $k++)
                 {
                     if ($lines[$i]+$lines[$j]+$lines[$k]===2020) {
-                        $output->writeln($lines[$i]*$lines[$j]*$lines[$k]);
+                        $output->write($lines[$i]*$lines[$j]*$lines[$k]);
                         return Command::SUCCESS;
                     }
                 }

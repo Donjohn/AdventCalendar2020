@@ -54,7 +54,7 @@ trait Day3
         $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.__FUNCTION__.'.txt',FILE_IGNORE_NEW_LINES);
 
         $nbTrees = $this->factorDay3($lines, 3, 1);
-        $output->writeln($nbTrees);
+        $output->write($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -68,7 +68,7 @@ trait Day3
         $lines = file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.'day3part1.txt',FILE_IGNORE_NEW_LINES);
 
         $nbTrees = $this->factorDay3($lines, 1, 1) * $this->factorDay3($lines, 3, 1) * $this->factorDay3($lines, 5, 1) * $this->factorDay3($lines, 7, 1) * $this->factorDay3($lines, 1, 2);
-        $output->writeln($nbTrees);
+        $output->write($nbTrees);
         return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 }

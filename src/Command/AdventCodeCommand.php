@@ -6,6 +6,7 @@ use App\AdventCode\AdventCode2020;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -42,6 +43,7 @@ class AdventCodeCommand extends Command
             ->setDescription('Add a short description for your command')
             ->addArgument('day', InputArgument::REQUIRED, 'Day')
             ->addArgument('part', InputArgument::REQUIRED, 'Part')
+            ->addOption('timer', 't', InputOption::VALUE_OPTIONAL, 'to see timer', false)
         ;
     }
 
@@ -51,9 +53,14 @@ class AdventCodeCommand extends Command
         $functionName = 'day'.$input->getArgument('day').'part'.$input->getArgument('part');
         if (method_exists($this->adventCode2020, $functionName))
         {
-            $startTime = microtime(true);
+            $startTime=0;
+            if ($input->getOption('timer')) {
+                $startTime = microtime(true);
+            }
             $return = $this->adventCode2020->{'day'.$input->getArgument('day').'part'.$input->getArgument('part')}($output);
-            $output->writeln((microtime(true)-$startTime).' ms');
+            if ($input->getOption('timer')) {
+                $output->writeln((microtime(true) - $startTime).' ms');
+            }
             return $return;
 
         }

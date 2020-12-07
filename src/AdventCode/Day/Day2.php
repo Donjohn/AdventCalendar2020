@@ -37,7 +37,7 @@ trait Day2
 
         }
 
-        $output->writeln($valide);
+        $output->write($valide);
         return $valide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
@@ -72,7 +72,7 @@ trait Day2
 
         }
 
-        $output->writeln($valide);
+        $output->write($valide);
         return $valide> 0 ? Command::SUCCESS: Command::FAILURE;
     }
 
