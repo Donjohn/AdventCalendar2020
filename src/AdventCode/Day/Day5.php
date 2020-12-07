@@ -8,7 +8,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Trait Day4
+ * Trait Day5
  *
  * @package App\AdventCode\Day
  */
