@@ -54,6 +54,9 @@ class AdventCode2020Test extends KernelTestCase
             ],
             [
                 [6,1],['6585']
+            ],
+            [
+                [6,2],['3276']
             ]
         ];
     }
