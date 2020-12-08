@@ -14,6 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 trait Day8
 {
+
+    private int $cursor = 0;
+    private int $value = 0;
     /**
      * @param OutputInterface $output
      *
@@ -21,62 +24,101 @@ trait Day8
      */
     public function day8part1(OutputInterface $output)
     {
-        $value = 0;
-
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
             $this->getFile(__FUNCTION__.'.txt', true),
             $matches
         );
 
-        $cursor = 0;
-        while (isset($matches['command'][$cursor])) {
-            $cursorToUnset = $cursor;
-            $this->{$matches['command'][$cursor]}($matches['action'][$cursor], $cursor, $value);
-            unset($matches['command'][$cursorToUnset]);
-        }
+        $this->startConsole($matches['command'], $matches['action']);
 
-        $output->write($value);
-        return $value > 0 ? Command::SUCCESS : Command::FAILURE;
+        $output->write($this->value);
+        return $this->value > 0 ? Command::SUCCESS : Command::FAILURE;
     }
 
     /**
      * @param $action
-     * @param $cursor
-     * @param $value
      */
-    private function jmp($action, &$cursor, &$value)
+    private function jmp($action)
     {
         if ($action[0] === '-') {
-            $cursor -= (int)substr($action, 1);
+            $this->cursor -= (int)substr($action, 1);
         } else {
-            $cursor += (int)substr($action, 1);
+            $this->cursor += (int)substr($action, 1);
         }
     }
 
     /**
      * @param $action
-     * @param $cursor
-     * @param $value
      */
-    private function acc($action, &$cursor, &$value)
+    private function acc($action)
     {
         if ($action[0] === '-') {
-            $value -= (int)substr($action, 1);
+            $this->value -= (int)substr($action, 1);
         } else {
-            $value += (int)substr($action, 1);
+            $this->value += (int)substr($action, 1);
         }
-        $cursor++;
+        $this->cursor++;
     }
 
     /**
      * @param $action
-     * @param $cursor
-     * @param $value
      */
-    private function nop($action, &$cursor, &$value)
+    private function nop($action)
     {
-        $cursor++;
+        $this->cursor++;
+    }
+
+
+    /**
+     * @param array $command
+     * @param array $action
+     *
+     * @return bool
+     */
+    private function startConsole(array $command, array $action)
+    {
+        $this->cursor=0;
+        $this->value=0;
+
+        while (isset($command[$this->cursor]) && $this->cursor !== count($action)) {
+            $cursorToUnset = $this->cursor;
+            $this->{$command[$this->cursor]}($action[$this->cursor]);
+            unset($command[$cursorToUnset]);
+        }
+
+        return $this->cursor === count($action);
+    }
+
+
+    /**
+     * @param OutputInterface $output
+     *
+     * @return int
+     */
+    public function day8part2(OutputInterface $output)
+    {
+        preg_match_all(
+            '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
+            $this->getFile('day8part1.txt', true),
+            $matches
+        );
+
+        $originalProgram = $matches;
+
+        for($i=0; $i<count($matches['action']); $i++){
+            $matches = $originalProgram;
+            if ($matches['command'][$i]!=='acc' && (int)substr($matches['action'][$i],1)!==0)
+            {
+                $matches['command'][$i] = $matches['command'][$i]==='nop' ? 'jmp' : 'nop';
+                if ($this->startConsole($matches['command'], $matches['action'])) {
+                    $output->write($this->value);
+                    return Command::SUCCESS;
+                }
+            }
+        }
+
+        return Command::FAILURE;
     }
 
 }
