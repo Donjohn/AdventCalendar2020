@@ -80,14 +80,15 @@ trait Day8
     {
         $this->cursor=0;
         $this->value=0;
+        $max = count($action);
 
-        while (isset($command[$this->cursor]) && $this->cursor !== count($action)) {
+        while (isset($command[$this->cursor]) && $this->cursor !== $max) {
             $cursorToUnset = $this->cursor;
             $this->{$command[$this->cursor]}($action[$this->cursor]);
             unset($command[$cursorToUnset]);
         }
 
-        return $this->cursor === count($action);
+        return $this->cursor === $max;
     }
 
 
@@ -105,11 +106,12 @@ trait Day8
         );
 
         $originalProgram = $matches;
+        $max = count($matches['action']);
 
-        for($i=0; $i<count($matches['action']); $i++){
-            $matches = $originalProgram;
+        for($i=0; $i<$max; $i++){
             if ($matches['command'][$i]!=='acc' && (int)substr($matches['action'][$i],1)!==0)
             {
+                $matches = $originalProgram;
                 $matches['command'][$i] = $matches['command'][$i]==='nop' ? 'jmp' : 'nop';
                 if ($this->startConsole($matches['command'], $matches['action'])) {
                     $output->write($this->value);

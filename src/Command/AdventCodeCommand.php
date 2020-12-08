@@ -43,7 +43,7 @@ class AdventCodeCommand extends Command
             ->setDescription('Add a short description for your command')
             ->addArgument('day', InputArgument::REQUIRED, 'Day')
             ->addArgument('part', InputArgument::REQUIRED, 'Part')
-            ->addOption('timer', 't', InputOption::VALUE_OPTIONAL, 'to see timer', false)
+            ->addOption('timer', 't', InputOption::VALUE_NONE, 'to see timer')
         ;
     }
 
@@ -59,6 +59,7 @@ class AdventCodeCommand extends Command
             }
             $return = $this->adventCode2020->{'day'.$input->getArgument('day').'part'.$input->getArgument('part')}($output);
             if ($input->getOption('timer')) {
+                $output->writeln('');
                 $output->writeln((microtime(true) - $startTime).' ms');
             }
             return $return;
