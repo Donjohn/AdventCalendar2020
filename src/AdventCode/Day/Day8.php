@@ -17,7 +17,7 @@ trait Day8
 
     private int $cursor = 0;
     private int $value = 0;
-    private array $unsetCommands = [];
+    private array $unsetCursors = [];
     /**
      * @param OutputInterface $output
      *
@@ -42,6 +42,9 @@ trait Day8
      */
     private function jmp($action)
     {
+        if ((int)substr($action,1)!==0) {
+            $this->unsetCursors[] = $this->cursor;
+        }
         if ($action[0] === '-') {
             $this->cursor -= (int)substr($action, 1);
         } else {
@@ -67,6 +70,9 @@ trait Day8
      */
     private function nop($action)
     {
+        if ((int)substr($action,1)!==0) {
+            $this->unsetCursors[] = $this->cursor;
+        }
         $this->cursor++;
     }
 
@@ -84,9 +90,9 @@ trait Day8
         $max = count($action);
 
         while (isset($command[$this->cursor]) && $this->cursor !== $max) {
-            $this->unsetCommands[] = $this->cursor;
+            $currentCursor = $this->cursor;
             $this->{$command[$this->cursor]}($action[$this->cursor]);
-            unset($command[$this->unsetCommands[count($this->unsetCommands)-1]]);
+            unset($command[$currentCursor]);
         }
 
         return $this->cursor === $max;
@@ -103,21 +109,16 @@ trait Day8
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
             $this->getFile('day8part1.txt', true),
-            $matches
+            $originalProgram
         );
 
-        $originalProgram = $matches;
-
-        $this->startConsole($matches['command'], $matches['action']);
-        foreach ($this->unsetCommands as $i) {
-            if ($matches['command'][$i]!=='acc' && (int)substr($matches['action'][$i],1)!==0)
-            {
-                $matches = $originalProgram;
-                $matches['command'][$i] = $matches['command'][$i]==='nop' ? 'jmp' : 'nop';
-                if ($this->startConsole($matches['command'], $matches['action'])) {
-                    $output->write($this->value);
-                    return Command::SUCCESS;
-                }
+        $this->startConsole($originalProgram['command'], $originalProgram['action']);
+        foreach ($this->unsetCursors as $i) {
+            $testProgram = $originalProgram;
+            $testProgram['command'][$i] = $testProgram['command'][$i]==='nop' ? 'jmp' : 'nop';
+            if ($this->startConsole($testProgram['command'], $testProgram['action'])) {
+                $output->write($this->value);
+                return Command::SUCCESS;
             }
         }
 
