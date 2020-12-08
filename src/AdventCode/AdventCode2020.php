@@ -11,6 +11,7 @@ use App\AdventCode\Day\Day4;
 use App\AdventCode\Day\Day5;
 use App\AdventCode\Day\Day6;
 use App\AdventCode\Day\Day7;
+use App\AdventCode\Day\Day8;
 
 /**
  * Class AdventCode2020
@@ -27,6 +28,7 @@ class AdventCode2020
     use Day5;
     use Day6;
     use Day7;
+    use Day8;
 
     /**
      * @var string
@@ -41,11 +43,16 @@ class AdventCode2020
     /**
      * @param string $file
      *
+     * @param bool   $plainText
+     *
      * @return array|false
      */
-    private function getFile(string $file)
+    private function getFile(string $file, bool $plainText = false)
     {
-        return file($this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.$file, FILE_IGNORE_NEW_LINES);
+        $path = $this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.$file;
+        return $plainText ?
+            file_get_contents($path):
+            file($path, FILE_IGNORE_NEW_LINES);
     }
 
 }
