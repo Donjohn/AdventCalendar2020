@@ -80,17 +80,17 @@ trait Day8
     /**
      * @param array $command
      * @param array $action
-     * @param int   $startCursor
+     * @param int   $startingCursor
      *
      * @return bool
      */
-    private function startConsole(array $command, array $action, int $startCursor = 0): bool
+    private function startConsole(array $command, array $action, int $startingCursor = 0): bool
     {
-        $this->cursor=$startCursor;
-        $this->value=0;
+        $this->cursor = $startingCursor;
+        $this->value = 0;
         $max = count($action);
 
-        while (isset($command[$this->cursor]) && $this->cursor !== $max) {
+        while (isset($command[$this->cursor]) && $this->cursor < $max) {
             $currentCursor = $this->cursor;
             $this->{$command[$this->cursor]}($action[$this->cursor]);
             unset($command[$currentCursor]);
@@ -114,10 +114,10 @@ trait Day8
         );
 
         $this->startConsole($originalProgram['command'], $originalProgram['action']);
-        foreach ($this->unsetCursors as $i) {
+        foreach ($this->unsetCursors as $cursorToSwap) {
             $testProgram = $originalProgram;
-            $testProgram['command'][$i] = $testProgram['command'][$i]==='nop' ? 'jmp' : 'nop';
-            if ($this->startConsole($testProgram['command'], $testProgram['action'], $i)) {
+            $testProgram['command'][$cursorToSwap] = $testProgram['command'][$cursorToSwap]==='nop' ? 'jmp' : 'nop';
+            if ($this->startConsole($testProgram['command'], $testProgram['action'], $cursorToSwap)) {
                 $this->startConsole($testProgram['command'], $testProgram['action']);
                 $output->write($this->value);
                 return Command::SUCCESS;
