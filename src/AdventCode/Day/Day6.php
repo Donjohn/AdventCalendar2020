@@ -4,9 +4,6 @@
 namespace App\AdventCode\Day;
 
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Trait Day6
  *
@@ -15,11 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 trait Day6
 {
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day6part1(OutputInterface $output): int
+    public function day6part1(): int
     {
         $lines = $this->getFile('day6part1.txt');
 
@@ -42,16 +37,13 @@ trait Day6
 
         $value+=count($answers);
 
-        $output->write($value);
-        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+        return $value;
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day6part2(OutputInterface $output): int
+    public function day6part2(): int
     {
         $lines = $this->getFile('day6part1.txt');
 
@@ -76,8 +68,7 @@ trait Day6
 
         $value+=count($answers);
 
-        $output->write($value);
-        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+        return $value;
     }
 
 

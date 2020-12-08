@@ -4,9 +4,6 @@
 namespace App\AdventCode\Day;
 
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Trait Day5
  *
@@ -15,11 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 trait Day5
 {
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day5part1(OutputInterface $output): int
+    public function day5part1(): int
     {
         $lines = $this->getFile('day5part1.txt');
 
@@ -32,16 +27,13 @@ trait Day5
             $value = $calc > $value ? $calc : $value;
         }
 
-        $output->write($value);
-        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+        return $value;
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day5part2(OutputInterface $output): int
+    public function day5part2(): int
     {
         $lines = $this->getFile('day5part1.txt');
 
@@ -54,10 +46,7 @@ trait Day5
 
         $allSeats = array_fill($seats[0], count($seats), '');
 
-        $value = current(array_diff(array_keys($allSeats), $seats));
-
-        $output->write($value);
-        return $value> 0 ? Command::SUCCESS: Command::FAILURE;
+        return current(array_diff(array_keys($allSeats), $seats));
     }
 
     /**

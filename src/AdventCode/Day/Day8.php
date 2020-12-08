@@ -4,9 +4,6 @@
 namespace App\AdventCode\Day;
 
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Trait Day8
  *
@@ -18,12 +15,11 @@ trait Day8
     private int $cursor = 0;
     private int $value = 0;
     private array $unsetCursors = [];
+
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day8part1(OutputInterface $output): int
+    public function day8part1(): int
     {
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
@@ -33,8 +29,7 @@ trait Day8
 
         $this->startConsole($matches['command'], $matches['action']);
 
-        $output->write($this->value);
-        return $this->value > 0 ? Command::SUCCESS : Command::FAILURE;
+        return $this->value;
     }
 
     /**
@@ -102,11 +97,9 @@ trait Day8
 
 
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day8part2(OutputInterface $output): int
+    public function day8part2(): int
     {
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)$/m',
@@ -119,12 +112,11 @@ trait Day8
             $testProgram = $originalProgram;
             $testProgram['command'][$cursorToSwap] = $testProgram['command'][$cursorToSwap]==='nop' ? 'jmp' : 'nop';
             if ($this->startConsole($testProgram['command'], $testProgram['action'], $cursorToSwap, $value)) {
-                $output->write($this->value);
-                return Command::SUCCESS;
+                return $this->value;
             }
         }
 
-        return Command::FAILURE;
+        return 0;
     }
 
 }

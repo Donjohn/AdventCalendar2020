@@ -57,12 +57,13 @@ class AdventCodeCommand extends Command
             if ($input->getOption('timer')) {
                 $startTime = microtime(true);
             }
-            $return = $this->adventCode2020->{'day'.$input->getArgument('day').'part'.$input->getArgument('part')}($output);
+            $output->write($this->adventCode2020->{'day'.$input->getArgument('day').'part'.$input->getArgument('part')}());
             if ($input->getOption('timer')) {
                 $output->writeln('');
                 $output->writeln((microtime(true) - $startTime).' ms');
             }
-            return $return;
+
+            return Command::SUCCESS;
 
         }
         $output->writeln(sprintf('Erreur : you did not write a solution for Day%s Part%s', $input->getArgument('day'), $input->getArgument('part')));

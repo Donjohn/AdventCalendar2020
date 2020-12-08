@@ -4,9 +4,6 @@
 namespace App\AdventCode\Day;
 
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Trait Day1
  *
@@ -15,11 +12,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 trait Day1
 {
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day1part1(OutputInterface $output): int
+    public function day1part1(): int
     {
         $lines = $this->getFile('day1part1.txt');
         sort($lines);
@@ -30,24 +25,20 @@ trait Day1
             for($j=$i+1; $lines[$i]+$lines[$j]<=2020 && $i < $nbInputs && $j < $nbInputs; $j++)
             {
                 if ($lines[$i]+$lines[$j]===2020) {
-                    $output->write($lines[$i]*$lines[$j]);
-                    return Command::SUCCESS;
+                    return $lines[$i]*$lines[$j];
                 }
             }
             $j=$i;
         }
 
-        return Command::FAILURE;
+        return 0;
     }
 
 
-
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day1part2(OutputInterface $output): int
+    public function day1part2(): int
     {
         $lines = $this->getFile('day1part2.txt');
         sort($lines);
@@ -61,8 +52,7 @@ trait Day1
                 for($k=$j+1; $lines[$i]+$lines[$j]+$lines[$k]<=2020 && $i < $nbInputs && $j < $nbInputs && $k < $nbInputs; $k++)
                 {
                     if ($lines[$i]+$lines[$j]+$lines[$k]===2020) {
-                        $output->write($lines[$i]*$lines[$j]*$lines[$k]);
-                        return Command::SUCCESS;
+                        return $lines[$i]*$lines[$j]*$lines[$k];
                     }
                 }
                 $k=$j;
@@ -70,6 +60,6 @@ trait Day1
             $j=$i;
         }
 
-        return Command::FAILURE;
+        return 0;
     }
 }

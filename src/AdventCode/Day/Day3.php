@@ -4,9 +4,6 @@
 namespace App\AdventCode\Day;
 
 
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Trait Day3
  *
@@ -45,30 +42,22 @@ trait Day3
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day3part1(OutputInterface $output): int
+    public function day3part1(): int
     {
         $lines = $this->getFile('day3part1.txt');
 
-        $nbTrees = $this->getSmashedTrees($lines, 3, 1);
-        $output->write($nbTrees);
-        return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
+        return $this->getSmashedTrees($lines, 3, 1);
     }
 
     /**
-     * @param OutputInterface $output
-     *
      * @return int
      */
-    public function day3part2(OutputInterface $output): int
+    public function day3part2(): int
     {
         $lines = $this->getFile('day3part1.txt');
 
-        $nbTrees = $this->getSmashedTrees($lines, 1, 1) * $this->getSmashedTrees($lines, 3, 1) * $this->getSmashedTrees($lines, 5, 1) * $this->getSmashedTrees($lines, 7, 1) * $this->getSmashedTrees($lines, 1, 2);
-        $output->write($nbTrees);
-        return $nbTrees> 0 ? Command::SUCCESS: Command::FAILURE;
+        return $this->getSmashedTrees($lines, 1, 1) * $this->getSmashedTrees($lines, 3, 1) * $this->getSmashedTrees($lines, 5, 1) * $this->getSmashedTrees($lines, 7, 1) * $this->getSmashedTrees($lines, 1, 2);
     }
 }
