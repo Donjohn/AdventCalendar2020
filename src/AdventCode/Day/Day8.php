@@ -80,12 +80,13 @@ trait Day8
     /**
      * @param array $command
      * @param array $action
+     * @param int   $startCursor
      *
      * @return bool
      */
-    private function startConsole(array $command, array $action): bool
+    private function startConsole(array $command, array $action, int $startCursor = 0): bool
     {
-        $this->cursor=0;
+        $this->cursor=$startCursor;
         $this->value=0;
         $max = count($action);
 
@@ -116,7 +117,8 @@ trait Day8
         foreach ($this->unsetCursors as $i) {
             $testProgram = $originalProgram;
             $testProgram['command'][$i] = $testProgram['command'][$i]==='nop' ? 'jmp' : 'nop';
-            if ($this->startConsole($testProgram['command'], $testProgram['action'])) {
+            if ($this->startConsole($testProgram['command'], $testProgram['action'], $i)) {
+                $this->startConsole($testProgram['command'], $testProgram['action']);
                 $output->write($this->value);
                 return Command::SUCCESS;
             }
