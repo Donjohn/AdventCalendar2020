@@ -43,7 +43,7 @@ trait Day8
     private function jmp($action)
     {
         if ((int)substr($action,1)!==0) {
-            $this->unsetCursors[] = $this->cursor;
+            $this->unsetCursors[$this->cursor] = $this->value;
         }
         if ($action[0] === '-') {
             $this->cursor -= (int)substr($action, 1);
@@ -71,7 +71,7 @@ trait Day8
     private function nop($action)
     {
         if ((int)substr($action,1)!==0) {
-            $this->unsetCursors[] = $this->cursor;
+            $this->unsetCursors[$this->cursor] = $this->value;
         }
         $this->cursor++;
     }
@@ -81,13 +81,14 @@ trait Day8
      * @param array $command
      * @param array $action
      * @param int   $startingCursor
+     * @param int   $startingValue
      *
      * @return bool
      */
-    private function startConsole(array $command, array $action, int $startingCursor = 0): bool
+    private function startConsole(array $command, array $action, int $startingCursor = 0, int $startingValue = 0): bool
     {
         $this->cursor = $startingCursor;
-        $this->value = 0;
+        $this->value = $startingValue;
         $max = count($action);
 
         while (isset($command[$this->cursor]) && $this->cursor < $max) {
@@ -114,11 +115,10 @@ trait Day8
         );
 
         $this->startConsole($originalProgram['command'], $originalProgram['action']);
-        foreach ($this->unsetCursors as $cursorToSwap) {
+        foreach ($this->unsetCursors as $cursorToSwap => $value) {
             $testProgram = $originalProgram;
             $testProgram['command'][$cursorToSwap] = $testProgram['command'][$cursorToSwap]==='nop' ? 'jmp' : 'nop';
-            if ($this->startConsole($testProgram['command'], $testProgram['action'], $cursorToSwap)) {
-                $this->startConsole($testProgram['command'], $testProgram['action']);
+            if ($this->startConsole($testProgram['command'], $testProgram['action'], $cursorToSwap, $value)) {
                 $output->write($this->value);
                 return Command::SUCCESS;
             }
