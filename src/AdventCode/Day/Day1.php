@@ -19,9 +19,9 @@ trait Day1
      *
      * @return int
      */
-    public function day1part1(OutputInterface $output)
+    public function day1part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day1part1.txt');
         sort($lines);
         $nbInputs = count($lines);
         $j=1;
@@ -47,9 +47,9 @@ trait Day1
      *
      * @return int
      */
-    public function day1part2(OutputInterface $output)
+    public function day1part2(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day1part2.txt');
         sort($lines);
         $nbInputs = count($lines);
         $j=1;

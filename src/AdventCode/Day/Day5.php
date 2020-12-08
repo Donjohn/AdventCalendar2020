@@ -19,9 +19,9 @@ trait Day5
      *
      * @return int
      */
-    public function day5part1(OutputInterface $output)
+    public function day5part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day5part1.txt');
 
 
         $value = 0;
@@ -41,7 +41,7 @@ trait Day5
      *
      * @return int
      */
-    public function day5part2(OutputInterface $output)
+    public function day5part2(OutputInterface $output): int
     {
         $lines = $this->getFile('day5part1.txt');
 

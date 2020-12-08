@@ -18,7 +18,7 @@ class AdventCode2020Test extends KernelTestCase
     /**
      * @return int[][][]
      */
-    public function provideDayAndPart()
+    public function provideDayAndPart(): array
     {
         return
         [

@@ -24,7 +24,7 @@ trait Day3
      *
      * @return int
      */
-    private function getSmashedTrees(array $lines, int $right, int $down)
+    private function getSmashedTrees(array $lines, int $right, int $down): int
     {
         $nbTrees = 0;
         $nbLines = count($lines)-1;
@@ -49,9 +49,9 @@ trait Day3
      *
      * @return int
      */
-    public function day3part1(OutputInterface $output)
+    public function day3part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day3part1.txt');
 
         $nbTrees = $this->getSmashedTrees($lines, 3, 1);
         $output->write($nbTrees);
@@ -63,7 +63,7 @@ trait Day3
      *
      * @return int
      */
-    public function day3part2(OutputInterface $output)
+    public function day3part2(OutputInterface $output): int
     {
         $lines = $this->getFile('day3part1.txt');
 

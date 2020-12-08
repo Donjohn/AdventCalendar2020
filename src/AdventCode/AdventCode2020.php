@@ -45,14 +45,12 @@ class AdventCode2020
      *
      * @param bool   $plainText
      *
-     * @return array|false
+     * @return array|false|string
      */
-    private function getFile(string $file, bool $plainText = false)
+    private function getFile(string $file, bool $plainText = false): bool|array|string
     {
         $path = $this->projectDir.DIRECTORY_SEPARATOR.'assets'.DIRECTORY_SEPARATOR.$file;
-        return $plainText ?
-            file_get_contents($path):
-            file($path, FILE_IGNORE_NEW_LINES);
+        return $plainText ? file_get_contents($path) : file($path, FILE_IGNORE_NEW_LINES);
     }
 
 }

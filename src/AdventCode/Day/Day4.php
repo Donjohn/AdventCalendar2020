@@ -19,9 +19,9 @@ trait Day4
      *
      * @return int
      */
-    public function day4part1(OutputInterface $output)
+    public function day4part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day4part1.txt');
         $nbValide = 0;
         $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
         $documentKey = [];
@@ -63,7 +63,7 @@ trait Day4
      *
      * @return int
      */
-    public function day4part2(OutputInterface $output)
+    public function day4part2(OutputInterface $output): int
     {
         $lines = $this->getFile('day4part1.txt');
         $nbValide = 0;

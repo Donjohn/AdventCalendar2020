@@ -19,9 +19,9 @@ trait Day6
      *
      * @return int
      */
-    public function day6part1(OutputInterface $output)
+    public function day6part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day6part1.txt');
 
 
         $answers = [];
@@ -51,7 +51,7 @@ trait Day6
      *
      * @return int
      */
-    public function day6part2(OutputInterface $output)
+    public function day6part2(OutputInterface $output): int
     {
         $lines = $this->getFile('day6part1.txt');
 

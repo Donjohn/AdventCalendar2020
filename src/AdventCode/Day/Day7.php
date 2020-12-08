@@ -19,9 +19,9 @@ trait Day7
      *
      * @return int
      */
-    public function day7part1(OutputInterface $output)
+    public function day7part1(OutputInterface $output): int
     {
-        $lines = $this->getFile(__FUNCTION__.'.txt');
+        $lines = $this->getFile('day7part1.txt');
 
 
         preg_match_all('/(\w+\s\w+)\sbags\scontain\s.+(shiny\sgold+)\sbags/m', implode("\n", $lines), $matches);
@@ -53,7 +53,7 @@ trait Day7
      *
      * @return int
      */
-    private function validBag(string $bag, array $cargo, array $goodBags)
+    private function validBag(string $bag, array $cargo, array $goodBags): int
     {
         if (in_array($bag, $goodBags, true)) {
             return 1;
@@ -76,7 +76,7 @@ trait Day7
      *
      * @return int
      */
-    public function day7part2(OutputInterface $output)
+    public function day7part2(OutputInterface $output): int
     {
         $lines = $this->getFile('day7part1.txt');
 
@@ -106,7 +106,7 @@ trait Day7
      *
      * @return int
      */
-    private function countBag(string $bag, array $cargo)
+    private function countBag(string $bag, array $cargo): float|int
     {
         if (count($cargo[$bag])===0)
         {

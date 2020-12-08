@@ -23,11 +23,11 @@ trait Day8
      *
      * @return int
      */
-    public function day8part1(OutputInterface $output)
+    public function day8part1(OutputInterface $output): int
     {
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
-            $this->getFile(__FUNCTION__.'.txt', true),
+            $this->getFile('day8part1.txt', true),
             $matches
         );
 
@@ -83,7 +83,7 @@ trait Day8
      *
      * @return bool
      */
-    private function startConsole(array $command, array $action)
+    private function startConsole(array $command, array $action): bool
     {
         $this->cursor=0;
         $this->value=0;
@@ -104,10 +104,10 @@ trait Day8
      *
      * @return int
      */
-    public function day8part2(OutputInterface $output)
+    public function day8part2(OutputInterface $output): int
     {
         preg_match_all(
-            '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
+            '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)$/m',
             $this->getFile('day8part1.txt', true),
             $originalProgram
         );
