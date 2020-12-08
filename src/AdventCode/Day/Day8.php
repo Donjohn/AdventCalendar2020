@@ -17,6 +17,7 @@ trait Day8
 
     private int $cursor = 0;
     private int $value = 0;
+    private array $unsetCommands = [];
     /**
      * @param OutputInterface $output
      *
@@ -83,9 +84,9 @@ trait Day8
         $max = count($action);
 
         while (isset($command[$this->cursor]) && $this->cursor !== $max) {
-            $cursorToUnset = $this->cursor;
+            $this->unsetCommands[] = $this->cursor;
             $this->{$command[$this->cursor]}($action[$this->cursor]);
-            unset($command[$cursorToUnset]);
+            unset($command[$this->unsetCommands[count($this->unsetCommands)-1]]);
         }
 
         return $this->cursor === $max;
@@ -106,9 +107,9 @@ trait Day8
         );
 
         $originalProgram = $matches;
-        $max = count($matches['action']);
 
-        for($i=0; $i<$max; $i++){
+        $this->startConsole($matches['command'], $matches['action']);
+        foreach ($this->unsetCommands as $i) {
             if ($matches['command'][$i]!=='acc' && (int)substr($matches['action'][$i],1)!==0)
             {
                 $matches = $originalProgram;
