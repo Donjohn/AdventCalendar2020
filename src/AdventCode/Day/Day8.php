@@ -23,7 +23,7 @@ trait Day8
     {
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)/m',
-            $this->getFile('day8part1.txt', true),
+            $this->getFile('day8.txt', true),
             $matches
         );
 
@@ -103,7 +103,7 @@ trait Day8
     {
         preg_match_all(
             '/(?P<command>jmp|acc|nop)\s(?P<action>[+|\-]\d+)$/m',
-            $this->getFile('day8part1.txt', true),
+            $this->getFile('day8.txt', true),
             $originalProgram
         );
 

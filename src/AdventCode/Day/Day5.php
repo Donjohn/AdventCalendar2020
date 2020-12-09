@@ -16,7 +16,7 @@ trait Day5
      */
     public function day5part1(): int
     {
-        $lines = $this->getFile('day5part1.txt');
+        $lines = $this->getFile('day5.txt');
 
 
         $value = 0;
@@ -35,7 +35,7 @@ trait Day5
      */
     public function day5part2(): int
     {
-        $lines = $this->getFile('day5part1.txt');
+        $lines = $this->getFile('day5.txt');
 
 
         $seats = [];

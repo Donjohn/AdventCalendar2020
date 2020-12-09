@@ -46,7 +46,7 @@ trait Day3
      */
     public function day3part1(): int
     {
-        $lines = $this->getFile('day3part1.txt');
+        $lines = $this->getFile('day3.txt');
 
         return $this->getSmashedTrees($lines, 3, 1);
     }
@@ -56,7 +56,7 @@ trait Day3
      */
     public function day3part2(): int
     {
-        $lines = $this->getFile('day3part1.txt');
+        $lines = $this->getFile('day3.txt');
 
         return $this->getSmashedTrees($lines, 1, 1) * $this->getSmashedTrees($lines, 3, 1) * $this->getSmashedTrees($lines, 5, 1) * $this->getSmashedTrees($lines, 7, 1) * $this->getSmashedTrees($lines, 1, 2);
     }

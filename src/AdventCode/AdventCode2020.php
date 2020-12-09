@@ -12,6 +12,7 @@ use App\AdventCode\Day\Day5;
 use App\AdventCode\Day\Day6;
 use App\AdventCode\Day\Day7;
 use App\AdventCode\Day\Day8;
+use App\AdventCode\Day\Day9;
 
 /**
  * Class AdventCode2020
@@ -29,6 +30,7 @@ class AdventCode2020
     use Day6;
     use Day7;
     use Day8;
+    use Day9;
 
     /**
      * @var string

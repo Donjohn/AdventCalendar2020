@@ -16,7 +16,7 @@ trait Day4
      */
     public function day4part1(): int
     {
-        $lines = $this->getFile('day4part1.txt');
+        $lines = $this->getFile('day4.txt');
         $nbValide = 0;
         $pattern = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid'];
         $documentKey = [];
@@ -57,7 +57,7 @@ trait Day4
      */
     public function day4part2(): int
     {
-        $lines = $this->getFile('day4part1.txt');
+        $lines = $this->getFile('day4.txt');
         $nbValide = 0;
         $pattern = [
             'byr' => static function ($value) {

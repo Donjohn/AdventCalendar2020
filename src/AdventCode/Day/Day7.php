@@ -16,7 +16,7 @@ trait Day7
      */
     public function day7part1(): int
     {
-        $lines = $this->getFile('day7part1.txt');
+        $lines = $this->getFile('day7.txt');
 
 
         preg_match_all('/(\w+\s\w+)\sbags\scontain\s.+(shiny\sgold+)\sbags/m', implode("\n", $lines), $matches);
@@ -70,7 +70,7 @@ trait Day7
      */
     public function day7part2(): int
     {
-        $lines = $this->getFile('day7part1.txt');
+        $lines = $this->getFile('day7.txt');
 
 
         $value = 0;

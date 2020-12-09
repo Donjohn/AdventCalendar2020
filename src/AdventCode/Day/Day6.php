@@ -16,7 +16,7 @@ trait Day6
      */
     public function day6part1(): int
     {
-        $lines = $this->getFile('day6part1.txt');
+        $lines = $this->getFile('day6.txt');
 
 
         $answers = [];
@@ -45,7 +45,7 @@ trait Day6
      */
     public function day6part2(): int
     {
-        $lines = $this->getFile('day6part1.txt');
+        $lines = $this->getFile('day6.txt');
 
 
         $newGroup = true;
