@@ -24,7 +24,7 @@ trait Day2
             if (preg_match_all('/(?P<min>\d+)-(?P<max>\d+)\s(?P<letter>\w):\s(?P<password>\w+)/', $line, $matches))
             {
                 $nbfound = preg_match_all('/'.$matches['letter'][0].'/', $matches['password'][0]);
-                if ($nbfound >= (int) $matches['min'][0] && $nbfound <= (int) $matches['max'][0])
+                if ($nbfound >=  $matches['min'][0] && $nbfound <=  $matches['max'][0])
                 {
                     $valide++;
                 }
@@ -47,8 +47,8 @@ trait Day2
         {
             if (preg_match_all('/(?P<firstPos>\d+)-(?P<secondPos>\d+)\s(?P<letter>\w):\s(?P<password>\w+)/', $line, $matches))
             {
-                $firstPos = (int)$matches['firstPos'][0]-1;
-                $secondPos = (int)$matches['secondPos'][0]-1;
+                $firstPos = $matches['firstPos'][0]-1;
+                $secondPos = $matches['secondPos'][0]-1;
                 $letter =  $matches['letter'][0];
                 if (
                     isset($matches['password'][0][$firstPos], $matches['password'][0][$secondPos]) &&

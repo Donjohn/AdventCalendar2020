@@ -47,7 +47,7 @@ trait Day9
         {
             for($j=$i+1; $j<25; $j++)
             {
-                if ((int)$values[$i]+(int)$values[$j] === $valueToFind) {
+                if ($values[$i]+$values[$j] === $valueToFind) {
                     return $valueToFind;
                 }
             }
@@ -82,7 +82,7 @@ trait Day9
                 $removeStart=false;
             } else {
                 $removeStart=true;
-                $pendingSum+=(int)$lines[$end++];
+                $pendingSum+=$lines[$end++];
             }
 
         }

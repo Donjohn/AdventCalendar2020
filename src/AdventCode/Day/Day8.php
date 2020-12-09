@@ -37,13 +37,13 @@ trait Day8
      */
     private function jmp($action)
     {
-        if ((int)substr($action,1)!==0) {
+        if (substr($action,1)!==0) {
             $this->unsetCursors[$this->cursor] = $this->value;
         }
         if ($action[0] === '-') {
-            $this->cursor -= (int)substr($action, 1);
+            $this->cursor -= substr($action, 1);
         } else {
-            $this->cursor += (int)substr($action, 1);
+            $this->cursor += substr($action, 1);
         }
     }
 
@@ -53,9 +53,9 @@ trait Day8
     private function acc($action)
     {
         if ($action[0] === '-') {
-            $this->value -= (int)substr($action, 1);
+            $this->value -= substr($action, 1);
         } else {
-            $this->value += (int)substr($action, 1);
+            $this->value += substr($action, 1);
         }
         $this->cursor++;
     }
@@ -65,7 +65,7 @@ trait Day8
      */
     private function nop($action)
     {
-        if ((int)substr($action,1)!==0) {
+        if (substr($action,1)!==0) {
             $this->unsetCursors[$this->cursor] = $this->value;
         }
         $this->cursor++;

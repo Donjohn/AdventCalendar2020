@@ -61,13 +61,13 @@ trait Day4
         $nbValide = 0;
         $pattern = [
             'byr' => static function ($value) {
-                return (int) $value >= 1920 && (int) $value <= 2002;
+                return  $value >= 1920 &&  $value <= 2002;
             },
             'iyr' => static function($value) {
-                return (int) $value >= 2010 && (int) $value <= 2020;
+                return  $value >= 2010 &&  $value <= 2020;
             },
             'eyr' =>  static function($value) {
-                return (int) $value >= 2020 && (int) $value <= 2030;
+                return  $value >= 2020 &&  $value <= 2030;
             },
             'hgt' => static function($value) {
                 return preg_match_all('/^(\d{2,3})(cm|in)$/', $value, $matches ) &&
