@@ -72,6 +72,9 @@ class AdventCode2020Test extends KernelTestCase
             ],
             [
                 [9,1],['1212510616']
+            ],
+            [
+                [9,2],['171265123']
             ]
         ];
     }

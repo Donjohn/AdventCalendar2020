@@ -22,7 +22,7 @@ trait Day9
 
         for($i=25; $i<($max-25); $i++)
         {
-            if (!$this->isSumOfPrevious($i, $lines)) {
+            if ($this->isSumOfPrevious($i, $lines) === null) {
                 return $lines[$i];
             }
         }
@@ -36,9 +36,9 @@ trait Day9
      * @param int $index
      * @param array $entries
      *
-     * @return bool
+     * @return int|null
      */
-    private function isSumOfPrevious(int $index, array $entries): bool
+    private function isSumOfPrevious(int $index, array $entries): ?int
     {
         $valueToFind = (int)$entries[$index];
         $values = array_splice($entries, $index-25, 25);
@@ -48,13 +48,48 @@ trait Day9
             for($j=$i+1; $j<25; $j++)
             {
                 if ((int)$values[$i]+(int)$values[$j] === $valueToFind) {
-                    return true;
+                    return $valueToFind;
                 }
             }
         }
 
-        return false;
+        return null;
 
+    }
+
+    /**
+     * @return int
+     */
+    public function day9part2(): int
+    {
+        $value = $this->day9part1();
+        $lines = $this->getFile('day9.txt');
+
+        $start=0;
+        $end=0;
+        $removeStart=true;
+        $pendingSum=0;
+
+        while($pendingSum!==$value)
+        {
+            if ($pendingSum>$value)
+            {
+                if ($removeStart) {
+                    $pendingSum-=$lines[$start++];
+                } else {
+                    $pendingSum-=$lines[--$end];
+                }
+                $removeStart=false;
+            } else {
+                $removeStart=true;
+                $pendingSum+=(int)$lines[$end++];
+            }
+
+        }
+
+        $lines = array_splice($lines, $start, ($end-$start));
+
+        return min($lines)+max($lines);
     }
 
 }
