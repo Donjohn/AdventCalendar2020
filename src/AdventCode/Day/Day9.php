@@ -67,7 +67,7 @@ trait Day9
 
         $start=0;
         $end=0;
-        $removeStart=true;
+        $removeStart=false;
         $pendingSum=0;
 
         while($pendingSum!==$value)
