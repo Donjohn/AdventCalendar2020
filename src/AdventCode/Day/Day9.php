@@ -84,7 +84,6 @@ trait Day9
                 $removeStart=true;
                 $pendingSum+=$lines[$end++];
             }
-
         }
 
         $lines = array_splice($lines, $start, ($end-$start));
